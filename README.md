@@ -22,4 +22,4 @@ Instagram video linkleri eklenecekse `index.html` içindeki `#linkler` bölümü
 
 Site GitHub Pages üzerinde yayınlanır:
 
-https://bulutgurgeli.github.io/bulut-gurgeli-portfolio/
+https://bulutgurgeli.net (GitHub Pages: https://iamllevi.github.io/bulut-gurgeli-portfolio-main/)
