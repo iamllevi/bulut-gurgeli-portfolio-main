@@ -87,7 +87,8 @@ ikincil 5.94, altın metin 6.39. (Tablodaki "Açık tema koyu bant" sütunundaki
 
 - **Buton:** 44px yükseklik, 18px yatay iç boşluk, 4px köşe, 14px/500, cümle düzeni.
   `dark` = vurgu dolgu, `light` = kıl çizgi.
-- **Başlık çubuğu:** marka (dalga + isim), soluk 14px menü, TR/EN hap düğmeleri, 36px kare tema düğmesi.
+- **Başlık çubuğu:** logo/isim yok. Masaüstü: soluk 14px menü solda (hero metniyle aynı hizada), TR/EN hap
+  düğmeleri ve 36px kare tema düğmesi sağda. Mobil (≤960px): TR/EN solda, tema + hamburger sağda.
 - **İş kartı:** `--surface` zemin, kenar yok, 2px köşe. Üstte tür etiketi + kompakt bağlantı düğmesi
   (↗ / ▸), kenardan kenara 16:9 medya, altta grotesk başlık, altın rol satırı, açıklama.
 - **Medya:** 16:9, `data-label` sol üstte küçük koyu etiket, oynat düğmesi 52px (ızgarada 40px) yuvarlatılmış kare.
