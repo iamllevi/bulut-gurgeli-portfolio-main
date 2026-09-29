@@ -655,8 +655,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return (str && str !== "undefined" && str !== "null") ? str : "Bilinmiyor";
       };
 
-      // Google Apps Script'e gönderilecek tüm ziyaretçi verileri
-      const queryParams = new URLSearchParams({
+      // Cloudflare Worker'a gönderilecek tüm ziyaretçi verileri
+      // (IP, Worker tarafında Cloudflare üzerinden güvenilir şekilde alınır)
+      const analyticsData = {
         ip: safeString(locationData.ip),
         loc: safeString(locationData.location),
         isp: safeString(locationData.isp),
@@ -675,11 +676,13 @@ document.addEventListener("DOMContentLoaded", () => {
         time: safeString(localTime),
         theme: safeString(prefersDark),
         ref: safeString(referrer)
-      });
+      };
 
-      const relayUrl = `https://script.google.com/macros/s/AKfycbwYxAoXdfjHnL7QdelxD0X_I9JYp8qdPkdkMolqNF2V7bEHSzKw79I8SC2v533jMl_S/exec?${queryParams.toString()}`;
-
-      // Google Apps Script Relay (Sessiz & Engellenemez)
-      fetch(relayUrl, { method: "GET", mode: "no-cors" }).catch(() => {});
+      // Cloudflare Worker Relay (Sessiz)
+      fetch(`${CONTACT_ENDPOINT}/analytics`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(analyticsData)
+      }).catch(() => {});
     });
 });
