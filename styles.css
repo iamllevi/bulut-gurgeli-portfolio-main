@@ -359,41 +359,6 @@ button {
   backdrop-filter: saturate(140%) blur(14px);
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-}
-
-.brand-wave {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 18px;
-}
-
-.brand-wave span {
-  width: 2px;
-  background: var(--heading);
-  border-radius: 1px;
-}
-
-.brand-wave span:nth-child(1) { height: 35%; }
-.brand-wave span:nth-child(2) { height: 75%; }
-.brand-wave span:nth-child(3) { height: 100%; }
-.brand-wave span:nth-child(4) { height: 60%; }
-.brand-wave span:nth-child(5) { height: 30%; }
-
-.brand-name {
-  color: var(--heading);
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
 .site-nav {
   display: flex;
   align-items: center;
@@ -1547,7 +1512,8 @@ button {
     gap: var(--space-3);
   }
 
-  .brand {
+  /* Mobil: TR/EN solda, tema + menü sağda */
+  .language-switch {
     margin-right: auto;
   }
 
@@ -1658,10 +1624,6 @@ button {
     --header-h: 60px;
   }
 
-  .brand-name {
-    font-size: 1rem;
-  }
-
   .language-switch button {
     min-width: 32px;
   }
@@ -1704,12 +1666,6 @@ button {
   .site-footer {
     flex-direction: column;
     align-items: flex-start;
-  }
-}
-
-@media (max-width: 340px) {
-  .brand-name {
-    display: none;
   }
 }
 

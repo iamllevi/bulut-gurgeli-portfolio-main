@@ -9,7 +9,6 @@ const translations = {
   tr: {
     pageTitle: "Bulut Gürgeli | Sound Portfolio",
     metaDescription: "Bulut Gürgeli - ses mühendisi, ses teknisyeni ve boom operatörü portfolyosu.",
-    brandAria: "Bulut Gürgeli ana sayfa",
     navAria: "Ana navigasyon",
     languageAria: "Dil seçimi",
     navWorks: "İşler",
@@ -113,7 +112,6 @@ const translations = {
   en: {
     pageTitle: "Bulut Gürgeli | Sound Portfolio",
     metaDescription: "Bulut Gürgeli - sound engineer, sound technician, and boom operator portfolio.",
-    brandAria: "Bulut Gürgeli home",
     navAria: "Main navigation",
     languageAria: "Language selection",
     navWorks: "Works",
