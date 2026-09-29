@@ -1,0 +1,23 @@
+# Dependencies and generated output
+node_modules/
+dist/
+build/
+.wrangler/
+
+# Environment variables, credentials, and deployment secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
