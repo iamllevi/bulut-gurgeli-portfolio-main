@@ -32,7 +32,7 @@ const translations = {
     profileKicker: "Profil",
     profileTitle: "Sette pratik, postta detaycı.",
     profileBody:
-      "22 yaşında, ses mühendisliği alanında kendini geliştiren yaratıcı ve disiplinli bir ses profesyoneli. Mimar Sinan Güzel Sanatlar Üniversitesi'ndeki sanat odaklı eğitiminin ardından Bahçeşehir Üniversitesi Müzik Teknolojileri bölümünde eğitim gördü. Halen Galatasaray ITM'de tam zamanlı eğitimine devam ediyor.",
+      "22 yaşında, ses mühendisliği alanında kendini geliştiren yaratıcı ve disiplinli bir ses profesyoneli. Mimar Sinan Güzel Sanatlar Üniversitesi'ndeki sanat odaklı eğitiminin ardından Bahçeşehir Üniversitesi Müzik Teknolojileri bölümünde eğitim gördü. 2025-2026 yıllarında Galatasaray ITM'deki eğitimini tamamlayarak MEB onaylı sertifikasını aldı.",
     setSoundTitle: "Set Sesi",
     setSoundBody: "Boom, shotgun, lavalier, saha kayıt, ekipman kurulumu ve set koordinasyonu.",
     postAudioTitle: "Post Ses",
@@ -79,8 +79,8 @@ const translations = {
     educationTitle: "Eğitim",
     msgsuBody: "Klasik Gitar / Müzik Bölümü - Lise Diploması",
     bauBody: "Ses ve Müzik Teknolojileri - Lisans (Terk)",
-    itmYears: "2024 - Devam Ediyor",
-    itmBody: "Ses ve Müzik Teknolojileri - Eğitim Programı",
+    itmYears: "2025 - 2026",
+    itmBody: "Ses ve Müzik Teknolojileri - Eğitim Programı · MEB onaylı sertifika",
     skillsTitle: "Yetkinlikler",
     skill1: "Stüdyo ve canlı kayıt süreçleri",
     skill2: "Shotgun, lavalier ve saha mikrofonlama",
@@ -105,7 +105,10 @@ const translations = {
     formMessage: "Mesajınız",
     formSubmit: "Gönder",
     formSuccess: "Mesajınız başarıyla gönderildi!",
-    formError: "Bir hata oluştu, lütfen tekrar deneyin."
+    formError: "Bir hata oluştu, lütfen tekrar deneyin.",
+    menuAria: "Menü",
+    themeToLight: "Açık temaya geç",
+    themeToDark: "Koyu temaya geç"
   },
   en: {
     pageTitle: "Bulut Gürgeli | Sound Portfolio",
@@ -133,7 +136,7 @@ const translations = {
     profileKicker: "Profile",
     profileTitle: "Fast on set, detailed in post.",
     profileBody:
-      "A 22-year-old creative and disciplined sound professional developing his craft in sound engineering. After an arts-focused education at Mimar Sinan Fine Arts University, he studied Music Technologies at Bahçeşehir University. He currently continues full-time training at Galatasaray ITM.",
+      "A 22-year-old creative and disciplined sound professional developing his craft in sound engineering. After an arts-focused education at Mimar Sinan Fine Arts University, he studied Music Technologies at Bahçeşehir University. In 2025–2026 he trained at Galatasaray ITM and received his Ministry of National Education (MEB) approved certificate.",
     setSoundTitle: "Set Sound",
     setSoundBody: "Boom, shotgun, lavalier, field recording, equipment setup, and set coordination.",
     postAudioTitle: "Post Audio",
@@ -180,8 +183,8 @@ const translations = {
     educationTitle: "Education",
     msgsuBody: "Classical Guitar / Music Department - High School Diploma",
     bauBody: "Sound and Music Technologies - Undergraduate (Left)",
-    itmYears: "2024 - Present",
-    itmBody: "Sound and Music Technologies - Training Program",
+    itmYears: "2025 - 2026",
+    itmBody: "Sound and Music Technologies - Training Program · MEB (Ministry of National Education) approved certificate",
     skillsTitle: "Skills",
     skill1: "Studio and live recording workflows",
     skill2: "Shotgun, lavalier, and field microphone techniques",
@@ -205,7 +208,10 @@ const translations = {
     formMessage: "Your Message",
     formSubmit: "Send Message",
     formSuccess: "Your message has been sent successfully!",
-    formError: "An error occurred, please try again."
+    formError: "An error occurred, please try again.",
+    menuAria: "Menu",
+    themeToLight: "Switch to light theme",
+    themeToDark: "Switch to dark theme"
   },
 };
 
@@ -236,7 +242,39 @@ function applyLanguage(lang) {
   });
 
   localStorage.setItem("preferredLanguage", lang);
+  updateThemeToggleLabel();
 }
+
+/* --- Theme (dark / light) --- */
+const themeToggle = document.querySelector(".theme-toggle");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+function currentTheme() {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+function updateThemeToggleLabel() {
+  if (!themeToggle) return;
+  const dictionary = translations[document.documentElement.lang] || translations.tr;
+  themeToggle.setAttribute("aria-label", currentTheme() === "dark" ? dictionary.themeToLight : dictionary.themeToDark);
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  if (themeColorMeta) themeColorMeta.setAttribute("content", theme === "light" ? "#EEEBE6" : "#151413");
+  updateThemeToggleLabel();
+}
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try { localStorage.setItem("preferredTheme", next); } catch (e) {}
+  });
+}
+applyTheme(currentTheme());
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 navToggle.addEventListener("click", () => {
   const isOpen = nav.classList.toggle("is-open");
@@ -312,15 +350,16 @@ document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(
 /* --- 3. Card Tilt Effect --- */
 document.querySelectorAll('.work-card').forEach(card => {
   card.addEventListener('mousemove', e => {
+    if (prefersReducedMotion.matches) return;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -4;
-    const rotateY = ((x - centerX) / centerX) * 4;
+    const rotateX = ((y - centerY) / centerY) * -1.2;
+    const rotateY = ((x - centerX) / centerX) * 1.2;
 
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    card.style.transform = `perspective(1400px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     card.style.setProperty('--mouse-x', x + 'px');
     card.style.setProperty('--mouse-y', y + 'px');
   });
@@ -367,7 +406,7 @@ window.addEventListener('scroll', () => {
   if (!ticking) {
     requestAnimationFrame(() => {
       const scrolled = window.pageYOffset;
-      if (heroMain && scrolled < window.innerHeight) {
+      if (heroMain && scrolled < window.innerHeight && !prefersReducedMotion.matches) {
         heroMain.style.backgroundPositionY = (scrolled * 0.4) + 'px';
       }
       ticking = false;
@@ -391,7 +430,7 @@ document.querySelectorAll('.lite-youtube').forEach(div => {
   } else if (vid) {
     div.style.backgroundImage = `url(https://i.ytimg.com/vi/${vid}/hqdefault.jpg)`;
   } else if (plist) {
-    div.style.background = 'linear-gradient(135deg, rgba(16, 12, 32, 0.9), rgba(67, 30, 148, 0.5))';
+    div.style.background = 'var(--surface-2)';
   }
 
   const playBtn = document.createElement('button');
@@ -477,7 +516,10 @@ if (dynamicText) {
     setTimeout(typeEffect, typeSpeed);
   }
 
-  setTimeout(typeEffect, 1000);
+  // Hareket azaltma tercihinde yazma animasyonu başlamaz, çevrilmiş heroKicker metni kalır.
+  if (!prefersReducedMotion.matches) {
+    setTimeout(typeEffect, 1000);
+  }
 }
 
 // Contact Form Webhook Logic
@@ -528,7 +570,7 @@ function sendToDiscord(name, email, message, lang, btn, status) {
   });
 }
 
-// Ziyaretçi Analizi - Google Apps Script Relay
+// Ziyaretçi Analizi - Cloudflare Worker (/analytics)
 document.addEventListener("DOMContentLoaded", () => {
     let locationData = { ip: "Bulunamadı", location: "Bilinmiyor", isp: "Bilinmiyor" };
     let batteryInfo = "Desteklenmiyor";
