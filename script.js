@@ -499,8 +499,8 @@ if (contactForm) {
   });
 }
 
-// Cloudflare Worker adresi (deploy sonrası workers.dev adresiyle güncellenir)
-const CONTACT_ENDPOINT = "https://bulut-contact.WORKERS_SUBDOMAIN.workers.dev";
+// Cloudflare Worker adresi (worker/ klasöründeki Worker)
+const CONTACT_ENDPOINT = "https://bulut-contact.bulutgurgeli.workers.dev";
 
 function sendToDiscord(name, email, message, lang, btn, status) {
   fetch(CONTACT_ENDPOINT, {
