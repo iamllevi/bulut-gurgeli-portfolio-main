@@ -23,3 +23,16 @@ Instagram video linkleri eklenecekse `index.html` içindeki `#linkler` bölümü
 Site GitHub Pages üzerinde yayınlanır:
 
 https://bulutgurgeli.net (GitHub Pages: https://iamllevi.github.io/bulut-gurgeli-portfolio-main/)
+
+## İletişim formu (Cloudflare Worker)
+
+Form, `worker/` klasöründeki Cloudflare Worker'a gönderir; Worker mesajı Discord webhook'una iletir. Webhook adresi koda yazılmaz.
+
+```bash
+cd worker
+npx wrangler login
+npx wrangler secret put DISCORD_WEBHOOK_URL   # webhook adresini yapıştır
+npx wrangler deploy
+```
+
+Deploy çıktısındaki `https://bulut-contact.<hesap>.workers.dev` adresini `script.js` içindeki `CONTACT_ENDPOINT` değerine yaz. Worker yalnızca `worker/src/index.js` içindeki `ALLOWED_ORIGINS` listesindeki sitelerden gelen isteği kabul eder.

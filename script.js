@@ -495,23 +495,18 @@ if (contactForm) {
     btn.disabled = true;
     btn.style.opacity = "0.5";
     
-    // IP bilgisi alma (kullanıcıya zarar vermeyen anonim public IP)
-    fetch("https://api.ipify.org?format=json")
-      .then(res => res.json())
-      .then(data => {
-        sendToDiscord(name, email, message, data.ip, currentLang, btn, status);
-      })
-      .catch(() => {
-        sendToDiscord(name, email, message, "Alınamadı", currentLang, btn, status);
-      });
+    sendToDiscord(name, email, message, currentLang, btn, status);
   });
 }
 
-function sendToDiscord(name, email, message, ip, lang, btn, status) {
-  fetch("/api/contact", {
+// Cloudflare Worker adresi (deploy sonrası workers.dev adresiyle güncellenir)
+const CONTACT_ENDPOINT = "https://bulut-contact.WORKERS_SUBDOMAIN.workers.dev";
+
+function sendToDiscord(name, email, message, lang, btn, status) {
+  fetch(CONTACT_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, message, ip, lang })
+    body: JSON.stringify({ name, email, message, lang })
   })
   .then(response => {
     if (response.ok) {

@@ -1,0 +1,7 @@
+name = "bulut-contact"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Webhook adresi koda yazilmaz, gizli degisken olarak eklenir:
+#   npx wrangler secret put DISCORD_WEBHOOK_URL
+# Yerel gelistirme icin worker/.dev.vars kullanilir (gitignore'da).
